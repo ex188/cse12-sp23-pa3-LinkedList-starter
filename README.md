@@ -269,7 +269,7 @@ Coding style is an important part of ensuring readability and maintainability of
 * Javadoc conventions (`@param`, `@return` tags, `/** comments */`, etc.)
 
 
-A full style guide can be found [here](https://github.com/CaoAssignments/style-guide/blob/main/README.md) and a sample styled file can be found [here](https://github.com/CaoAssignments/style-guide/blob/main/SampleFile.java). If you need any clarifications, feel free to ask on Piazza.
+A full style guide can be found [here](https://github.com/CaoAssignments/guides/blob/main/style.md) and a sample styled file can be found [here](https://github.com/CaoAssignments/guides/blob/main/resources/SampleFile.java). If you need any clarifications, feel free to ask on Piazza.
 
 
 ## Submission Instructions
