@@ -77,8 +77,10 @@ public class MyLinkedList<E> extends AbstractList<E> {
         /* Add your implementation here */
         // TODO
         size=0;
-        head=null;
-        tail=null;
+        head=new Node(null);
+        tail=new Node(null);
+        head.next=tail;
+        tail.prev=head;
     }
 
     @Override
