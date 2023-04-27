@@ -76,16 +76,22 @@ public class MyLinkedList<E> extends AbstractList<E> {
     public MyLinkedList() {
         /* Add your implementation here */
         // TODO
+        size=0;
+        head=null;
+        tail=null;
     }
 
     @Override
     public int size() {
         // need to implement the size method
-        return 0; // TODO
+        return size; // TODO
     }
 
     @Override
     public E get(int index) {
+        for (int i=0;i<size();i++){
+            
+        }
         return (E) null;  // TODO
     }
 
