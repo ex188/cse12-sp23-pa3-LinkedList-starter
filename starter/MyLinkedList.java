@@ -1,5 +1,23 @@
-import java.util.AbstractList;
+/*
+ * Name: Anthony Chu
+ * Email: abc004@ucsd.edu
+ * PID: A17496679
+ * Did not use any outside source
+ * A gather of method for class MyLinkedList that 
+ * includes constructor, inner class and public methods. 
+ * The purpose is to let user access the MyLinkedList 
+ * that was created based on the Node and AbstractList class
+ */
 
+
+import java.util.AbstractList;
+/** 
+ * MyLinkedList class hold to all the method that 
+ * should be modify from the extends class AbstractList. 
+ * Important instance variables are: size(the size of the LinkedList),
+ * head(The starter dummy node)
+ * tail(The ended dummy node)
+ */
 public class MyLinkedList<E> extends AbstractList<E> {
 
     int size;
@@ -8,6 +26,9 @@ public class MyLinkedList<E> extends AbstractList<E> {
 
     /**
      * A Node class that holds data and references to previous and next Nodes.
+     * Important instance variables are: data(the actual values stored),
+     * next(the next node of this node)
+     * prev(the previous node of this node)
      */
     protected class Node {
         E data;
@@ -73,6 +94,13 @@ public class MyLinkedList<E> extends AbstractList<E> {
     }
 
     //  Implementation of the MyLinkedList Class
+
+    /**
+     * A default constructor to initailize a new class object
+     * It will set the size to 0
+     * create a dummy head and tail
+     * make the head.next and tail.prev point to each other
+     */
     public MyLinkedList() {
         /* Add your implementation here */
         // TODO
@@ -83,12 +111,24 @@ public class MyLinkedList<E> extends AbstractList<E> {
         tail.prev=head;
     }
 
+    /**
+     * To get the size of the object
+     * 
+     * @return the size of the class object
+     */
     @Override
     public int size() {
         // need to implement the size method
         return size; // TODO
     }
 
+    /**
+     * To get the element in the index in the object
+     * 
+     * @param index the index that the element should access
+     * 
+     * @return the element in the index in the object class object
+     */
     @Override
     public E get(int index) {
         if (index < 0 || index > size) {
@@ -98,6 +138,12 @@ public class MyLinkedList<E> extends AbstractList<E> {
         }  // TODO
     }
 
+    /**
+     * To add the element at the require index of the LinkedList
+     * 
+     * @param index the index that the element should place
+     * @param data the element that will be insert
+     */
     @Override
     public void add(int index, E data) {
         /* Add your implementation here */
@@ -108,9 +154,12 @@ public class MyLinkedList<E> extends AbstractList<E> {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
+        // inital the node element that will be insert
         Node element = new Node(data);
+        // setup current node that will be next and prev of the add element
         Node currNodeNext= head;
         Node currNodePrev= tail;
+        // two for loop to get to target nodes
         for (int i=0; i<index; i++){
             currNodeNext=currNodeNext.getNext();
         }
@@ -124,12 +173,22 @@ public class MyLinkedList<E> extends AbstractList<E> {
         size+=1;
     }
 
+    /**
+     * To add the element at the end of the LinkedList
+     * 
+     * @param data the element that will be insert
+     * 
+     * @return return true because it is a boolean function 
+     * due to the method definition in AbstractList
+     */
     @Override
     public boolean add(E data) {
         if (data == null) {
             throw new NullPointerException();
         }
+        // inital the node element that will be insert
         Node element = new Node(data);
+        // setup current node that will be prev of the add element
         Node currNodeNext= head;
         for (int i=0; i<size; i++){
             currNodeNext=currNodeNext.getNext();
@@ -142,6 +201,14 @@ public class MyLinkedList<E> extends AbstractList<E> {
         return true;
     }
 
+    /**
+     * To set the element at the require index in the LinkedList
+     * 
+     * @param index the index that the element should be modify
+     * @param data the element that will be insert
+     * 
+     * @return return the original element that was modified
+     */
     @Override
     public E set(int index, E data) {
         if (data == null) {
@@ -150,7 +217,9 @@ public class MyLinkedList<E> extends AbstractList<E> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
+        // setup node that will be modify
         Node prve = getNth(index);
+        // inital the node element that will be insert
         Node element = new Node(data);
         element.setNext(prve.getNext());
         element.setPrev(prve.getPrev());
@@ -159,11 +228,19 @@ public class MyLinkedList<E> extends AbstractList<E> {
         return (E) prve.getElement();
     }
 
+    /**
+     * To remove the element at the require index in the LinkedList
+     * 
+     * @param index the index that the element should be remove
+     * 
+     * @return return the removed element
+     */
     @Override
     public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
+        // setup the node that will be remove
         Node output = getNth(index);
         output.getPrev().setNext(output.getNext());
         output.getNext().setPrev(output.getPrev());
@@ -171,6 +248,9 @@ public class MyLinkedList<E> extends AbstractList<E> {
         return (E) output.getElement();
     }
 
+    /**
+     * To clear the entire LinkedList
+     */
     @Override
     public void clear() {
         head.next = tail;
@@ -178,6 +258,12 @@ public class MyLinkedList<E> extends AbstractList<E> {
         size = 0;
     }
 
+    /**
+     * To check the LinkedList is empty
+     * 
+     * @return return true is the LinkedList if it 
+     * is empty, else return false
+     */
     @Override
     public boolean isEmpty() {
         if (size==0){
@@ -186,11 +272,20 @@ public class MyLinkedList<E> extends AbstractList<E> {
         return false;  // TODO
     }
 
+    /**
+     * To get the element at the require index in the LinkedList
+     * by looping the whole LinkedList
+     * 
+     * @param index the index that the element should be get
+     * 
+     * @return return the element that's in the index
+     */
     protected Node getNth(int index) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }
         Node output=head.getNext();
+        // a for loop that will go through the whole LinkedList
         for (int i = 0; i < index; i++) {
             output = output.getNext();
         }

@@ -1,5 +1,10 @@
-
-/**
+/*
+ * Name: Anthony Chu
+ * Email: abc004@ucsd.edu
+ * PID: A17496679
+ * Did not use any outside source
+ * The file is about the testers that will test out the methods in MyLinkedList 
+ *
  * IMPORTANT: Do not change the method headers. Your tests will be run against
  * good and bad implementations of MyLinkedList. You will only receive points
  * if your test passes when run on a good implementation and fails for the
@@ -9,6 +14,10 @@
 import static org.junit.Assert.*;
 import org.junit.*;
 
+/** 
+ * A class that has all the require test to test out the 
+ * MyLinkedList class's methods
+ */
 public class MyLinkedListCustomTester {
 
 	// Optional: add test variables here
@@ -16,7 +25,7 @@ public class MyLinkedListCustomTester {
     private MyLinkedList<String> threeStringList;
     private String[] strData = {"CSE 12", "Paul Cao", "Christine Alvarado"};
 	private String addElement="Anthony";
-	private int midNode=2;
+	int midNode=strData.length/2;
 	/**
 	 * This sets up the test fixture. JUnit invokes this method before
 	 * every testXXX method. The @Before tag tells JUnit to run this method
@@ -24,7 +33,6 @@ public class MyLinkedListCustomTester {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		// Optional: add setup here
         emptyIntegerList = new MyLinkedList<Integer>();
         threeStringList = new MyLinkedList<>();
 
@@ -51,7 +59,8 @@ public class MyLinkedListCustomTester {
 	@Test
 	public void testCustomAdd() {
 		// TODO: add your test here
-		MyLinkedList<String>.Node oldLastNode = this.threeStringList.tail.prev;
+		MyLinkedList<String>.Node oldLastNode = 
+			this.threeStringList.tail.prev;
         this.threeStringList.add(addElement);
         assertEquals("Tail node should point back to the new node", 
             "Anthony", this.threeStringList.tail.prev.data);
@@ -61,7 +70,10 @@ public class MyLinkedListCustomTester {
         assertSame("Added node previous should be previous last node",
             oldLastNode, this.threeStringList.tail.prev.prev);
         assertSame("New added node next should point to tail",
-            this.threeStringList.tail.prev.next, this.threeStringList.tail);
+            this.threeStringList.tail.prev.next, 
+				this.threeStringList.tail);
+		assertEquals("Check return value", 
+			true, threeStringList.add(addElement));
 	}
 
 	/**
@@ -74,17 +86,19 @@ public class MyLinkedListCustomTester {
 		threeStringList.add(0,addElement);
 
 		assertEquals("New node should be accessible from head", 
-		"Anthony", this.threeStringList.head.next.data);
+			"Anthony", this.threeStringList.head.next.data);
         assertEquals("New node should be accessible from tail", 
             "Anthony", this.threeStringList.tail.prev.prev.prev.prev.data);
         assertEquals("Size of the LinkedList should be updated", 
             4, this.threeStringList.size);
         assertSame("Make sure the referece from head and tail are the same", 
-            this.threeStringList.head.next, this.threeStringList.tail.prev.prev.prev.prev);
+            this.threeStringList.head.next, 
+			this.threeStringList.tail.prev.prev.prev.prev);
         assertSame("Added node should have correct previous pointer",
             this.threeStringList.head.next.prev, this.threeStringList.head);
         assertSame("Added node should have the correct next pointer",
-            this.threeStringList.head.next.next, this.threeStringList.tail.prev.prev.prev);
+            this.threeStringList.head.next.next, 
+			this.threeStringList.tail.prev.prev.prev);
 	}
 	/**
 	 * Aims to test the add(int index, E data) method.
@@ -96,17 +110,20 @@ public class MyLinkedListCustomTester {
 		threeStringList.add(midNode,addElement);
 
 		assertEquals("New node should be accessible from head", 
-		"Anthony", this.threeStringList.head.next.next.next.data);
+			"Anthony", this.threeStringList.head.next.next.data);
         assertEquals("New node should be accessible from tail", 
-            "Anthony", this.threeStringList.tail.prev.prev.data);
+            "Anthony", this.threeStringList.tail.prev.prev.prev.data);
         assertEquals("Size of the LinkedList should be updated", 
             4, this.threeStringList.size);
         assertSame("Make sure the referece from head and tail are the same", 
-            this.threeStringList.head.next.next.next, this.threeStringList.tail.prev.prev);
+            this.threeStringList.head.next.next, 
+				this.threeStringList.tail.prev.prev.prev);
         assertSame("Added node should have correct previous pointer",
-            this.threeStringList.head.next.next.next.prev, this.threeStringList.head.next.next);
+            this.threeStringList.head.next.next.prev, 
+				this.threeStringList.head.next);
         assertSame("Added node should have the correct next pointer",
-            this.threeStringList.head.next.next.next.next, this.threeStringList.tail.prev);
+            this.threeStringList.head.next.next.next, 
+				this.threeStringList.tail.prev.prev);
 	
 	}
 
@@ -128,7 +145,17 @@ public class MyLinkedListCustomTester {
 	@Test
 	public void testCustomRemoveFromMiddle() {
 		// TODO: add your test here
-		
+
+		MyLinkedList<String>.Node node1 = 
+			this.threeStringList.head.next.next.next;
+        String removedNode = this.threeStringList.remove(midNode);
+        assertSame("Old node at position 1 should be removed", 
+            node1, this.threeStringList.tail.prev);
+        assertSame("Old node at position 1 should be removed", 
+            node1.prev, this.threeStringList.head.next);
+        assertEquals("Removed node should be returned Correctly",
+            removedNode, "Paul Cao");
+        assertEquals(2, this.threeStringList.size());
 	}
 
 	/**
@@ -138,5 +165,8 @@ public class MyLinkedListCustomTester {
 	@Test
 	public void testCustomSetIdxOutOfBounds() {
 		// TODO: add your test here
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			threeStringList.set(-1, addElement);
+		});
 	}
 }
