@@ -91,44 +91,109 @@ public class MyLinkedList<E> extends AbstractList<E> {
 
     @Override
     public E get(int index) {
-        for (int i=0;i<size();i++){
-            
-        }
-        return (E) null;  // TODO
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        } else {
+            return (E) getNth(index).data;
+        }  // TODO
     }
 
     @Override
     public void add(int index, E data) {
         /* Add your implementation here */
         // TODO
+        if (data == null) {
+            throw new NullPointerException();
+        }
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node element = new Node(data);
+        Node currNodeNext= head;
+        Node currNodePrev= tail;
+        for (int i=0; i<index; i++){
+            currNodeNext=currNodeNext.getNext();
+        }
+        for (int j=index; j<size();j++){
+            currNodePrev=currNodePrev.getPrev();
+        }
+        currNodeNext.setNext(element);
+        element.setPrev(currNodeNext);
+        currNodePrev.setPrev(element);
+        element.setNext(currNodePrev);
+        size+=1;
     }
 
     @Override
     public boolean add(E data) {
-        return true; // TODO
+        if (data == null) {
+            throw new NullPointerException();
+        }
+        Node element = new Node(data);
+        Node currNodeNext= head;
+        for (int i=0; i<size; i++){
+            currNodeNext=currNodeNext.getNext();
+        }
+        currNodeNext.setNext(element);
+        element.setPrev(currNodeNext);
+        tail.setPrev(element);
+        element.setNext(tail);
+        size+=1;
+        return true;
     }
 
     @Override
     public E set(int index, E data) {
-        return (E) null; // TODO
+        if (data == null) {
+            throw new NullPointerException();
+        }
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node prve = getNth(index);
+        Node element = new Node(data);
+        element.setNext(prve.getNext());
+        element.setPrev(prve.getPrev());
+        prve.getNext().setPrev(element);
+        prve.getPrev().setNext(element);
+        return (E) prve.getElement();
     }
 
     @Override
     public E remove(int index) {
-        return (E) null; // TODO
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node output = getNth(index);
+        output.getPrev().setNext(output.getNext());
+        output.getNext().setPrev(output.getPrev());
+        size-=1;
+        return (E) output.getElement();
     }
 
     @Override
     public void clear() {
-        /* Add your implementation here */
+        head.next = tail;
+        tail.prev = head;
+        size = 0;
     }
 
     @Override
     public boolean isEmpty() {
-        return true;  // TODO
+        if (size==0){
+            return true;
+        }
+        return false;  // TODO
     }
 
     protected Node getNth(int index) {
-        return (Node) null;  // TODO
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node output=head.getNext();
+        for (int i = 0; i < index; i++) {
+            output = output.getNext();
+        }
+        return (Node) output;
     }
 }
