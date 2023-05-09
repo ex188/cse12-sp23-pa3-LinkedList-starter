@@ -281,7 +281,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
      * @return return the element that's in the index
      */
     protected Node getNth(int index) {
-        if (index < 0 || index > size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
         Node output=head.getNext();
